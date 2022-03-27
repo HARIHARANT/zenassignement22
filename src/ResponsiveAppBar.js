@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {BrowserRouter,Routes,Route,Link} from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,11 +15,13 @@ import Stack from '@mui/material/Stack';
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import CardDesign from './CardDesign';
+import Checkout from './Checkout';
 
 const pages = ['Home', 'Abount', 'Shop'];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [checkoutView, setCheckoutView] = React.useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -116,7 +119,7 @@ const ResponsiveAppBar = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             <Stack direction="row" spacing={2}>
-              <Button variant="outlined" startIcon={<ShoppingCartIcon />}>                
+              <Button variant="outlined" startIcon={<ShoppingCartIcon />} onClick={()=>setCheckoutView({checkoutView:true})}>                
                 <StyledBadge badgeContent={cartCount} color="secondary" sx={{ marginRight: "20px" }}>Cart</StyledBadge>
               </Button>              
             </Stack>
@@ -129,6 +132,13 @@ const ResponsiveAppBar = () => {
        <h5 style={{ fontSize: "15px", color: "gray" }}>With this shop hompeage template</h5>
      </section> 
      <br></br>
+     {
+     checkoutView 
+     ? 
+     <section>
+        <Checkout></Checkout>
+      </section>
+     : 
      <section>
          <CardDesign childToParent={childToParent} title="Fancy Product" price="$40.00 - $80.00" badge={false} ratings={5}></CardDesign>
          <CardDesign childToParent={childToParent} title="Special Item" price="$40.00 - $80.00" badge={true} ratings={4}></CardDesign>
@@ -138,7 +148,8 @@ const ResponsiveAppBar = () => {
          <CardDesign childToParent={childToParent} title="Fancy Product" price="$240.00 - $380.00" badge={false} ratings={3}></CardDesign>
          <CardDesign childToParent={childToParent} title="Sale Product" price="$40.00 - $80.00" badge={true} ratings={5}></CardDesign>
          <CardDesign childToParent={childToParent} title="Fancy Product" price="$40.00 - $80.00" badge={true} ratings={2}></CardDesign>
-      </section>  
+      </section>     
+     }             
       <footer style={{ background: "black", paddingTop: "15px", paddingBottom: "15px" }}>
           <h5 style={{ color: "#fff" }}>Copyright © Your Website 2022</h5>
       </footer>  
