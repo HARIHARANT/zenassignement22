@@ -18,11 +18,12 @@ import CardDesign from './CardDesign';
 import Checkout from './Checkout';
 
 const pages = ['Home', 'Abount', 'Shop'];
+let cartList = [];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [checkoutView, setCheckoutView] = React.useState(false);
-
+  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -42,8 +43,21 @@ const ResponsiveAppBar = () => {
   }));
 
   var [cartCount, setCartCount] = React.useState(0);
+
   const childToParent = (childdata) => {  
-    console.log(childdata.cartItem);
+    console.log("**");
+    
+    if(childdata.cartItem){ // remove item from list
+      cartList.forEach((data,index)=>{
+          if(data.itemName == childdata.itemName){           
+            cartList.splice(index,1);
+          }
+      })
+    } else{ // add item to list
+      cartList.push(childdata);
+    }
+    
+    console.log(cartList);
     childdata.cartItem ? setCartCount(cartCount-1): setCartCount(cartCount+1);
   }
 
@@ -136,18 +150,18 @@ const ResponsiveAppBar = () => {
      checkoutView 
      ? 
      <section>
-        <Checkout></Checkout>
+        <Checkout cartList={cartList}></Checkout>
       </section>
      : 
      <section>
-         <CardDesign childToParent={childToParent} title="Fancy Product" price="$40.00 - $80.00" badge={false} ratings={5}></CardDesign>
-         <CardDesign childToParent={childToParent} title="Special Item" price="$40.00 - $80.00" badge={true} ratings={4}></CardDesign>
-         <CardDesign childToParent={childToParent} title="Sale Item" price="$40.00 - $80.00" badge={true} ratings={0}></CardDesign>
-         <CardDesign childToParent={childToParent} title="Popular Item" price="$140.00 - $180.00" badge={false} ratings={1}></CardDesign>
-         <CardDesign childToParent={childToParent} title="Special Product" price="$40.00 - $80.00" badge={true} ratings={5}></CardDesign>
-         <CardDesign childToParent={childToParent} title="Fancy Product" price="$240.00 - $380.00" badge={false} ratings={3}></CardDesign>
-         <CardDesign childToParent={childToParent} title="Sale Product" price="$40.00 - $80.00" badge={true} ratings={5}></CardDesign>
-         <CardDesign childToParent={childToParent} title="Fancy Product" price="$40.00 - $80.00" badge={true} ratings={2}></CardDesign>
+         <CardDesign childToParent={childToParent} title="Fancy Product" price="$40.00" badge={false} ratings={5}></CardDesign>
+         <CardDesign childToParent={childToParent} title="Special Item" price="$80.00" badge={true} ratings={4}></CardDesign>
+         <CardDesign childToParent={childToParent} title="Sale Item" price="$180.00" badge={true} ratings={0}></CardDesign>
+         <CardDesign childToParent={childToParent} title="Popular Item" price="$140.00" badge={false} ratings={1}></CardDesign>
+         <CardDesign childToParent={childToParent} title="Special Product" price="$80.00" badge={true} ratings={5}></CardDesign>
+         <CardDesign childToParent={childToParent} title="Fancy Product" price="$380.00" badge={false} ratings={3}></CardDesign>
+         <CardDesign childToParent={childToParent} title="Sale Product" price="$240.00" badge={true} ratings={5}></CardDesign>
+         <CardDesign childToParent={childToParent} title="Fancy Product" price="$40.00" badge={true} ratings={2}></CardDesign>
       </section>     
      }             
       <footer style={{ background: "black", paddingTop: "15px", paddingBottom: "15px" }}>

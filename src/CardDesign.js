@@ -22,14 +22,13 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 
-export default function CardDesign(props) {
-    console.log(props.childToParent);
+export default function CardDesign(props) {    
     const [rating, setRating] = React.useState(props.ratings);
     const [cartItem, setCartItem] = React.useState({cartItem:true});
     
     const childToParentFn = (data) => {        
         setCartItem(data); 
-        props.childToParent(data);      
+        props.childToParent(data);                
     }
 
     return (
@@ -73,9 +72,9 @@ export default function CardDesign(props) {
                     {                        
                     cartItem.cartItem
                     ? 
-                    <Button variant="outlined" sx={{ margin: "0 auto" }} onClick={(e)=>{childToParentFn({cartItem : false,count:1})}}>Add to cart</Button>
+                    <Button variant="outlined" sx={{ margin: "0 auto" }} onClick={(e)=>{childToParentFn({cartItem : false, count:1, price:props.price, itemName:props.title})}}>Add to cart</Button>
                     :
-                    <Button variant="outlined" sx={{ margin: "0 auto" }} onClick={(e)=>{childToParentFn({cartItem : true,count:1})}}>Remove to cart</Button>                    
+                    <Button variant="outlined" sx={{ margin: "0 auto" }} onClick={(e)=>{childToParentFn({cartItem : true, count:1, price:props.price, itemName:props.title})}}>Remove to cart</Button>                    
                     }                    
                 </CardActions>                 
             </Card>
